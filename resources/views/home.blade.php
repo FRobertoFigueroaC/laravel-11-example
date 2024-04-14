@@ -2,5 +2,6 @@
     <x-slot:heading>
       Home page
     </x-slot:heading>
-  <h1>Hello from Home!</h1>
+  <h1>Hellofrom HomePege!</h1>
+
 </x-layout>

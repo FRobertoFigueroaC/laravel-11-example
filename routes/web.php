@@ -8,17 +8,20 @@ use App\Models\Job;
 
 Route::view('/', 'home');
 Route::view('/contact', 'contact');
-// Index
-Route::get('/jobs', [JobController::class, 'index']);
-// Create
-Route::get('/jobs/create', [JobController::class, 'create']);
-// Show
-Route::get('/jobs/{job}', [JobController::class, 'show']);
-// Store
-Route::post('/jobs', [JobController::class, 'store']);
-// Edit
-Route::get('/jobs/{job}/edit', [JobController::class, 'edit']);
-// Update
-Route::patch('/jobs/{job}', [JobController::class, 'update']);
-// Destroy
-Route::delete('/jobs/{job}', [JobController::class, 'destroy']);
+// Resource
+Route::controller(JobController::class, 'index')->group(function (){
+  // Index
+  Route::get('/jobs', 'index');
+  // Create
+  Route::get('/jobs/create', 'create');
+  // Show
+  Route::get('/jobs/{job}', 'show');
+  // Store
+  Route::post('/jobs', 'store');
+  // Edit
+  Route::get('/jobs/{job}/edit', 'edit');
+  // Update
+  Route::patch('/jobs/{job}', 'update');
+  // Destroy
+  Route::delete('/jobs/{job}', 'destroy');
+});

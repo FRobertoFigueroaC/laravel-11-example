@@ -49,7 +49,7 @@ class JobController extends Controller
       return redirect('/login');
     }
     //Using gate
-    Gate::authorize('edit-job', $job);
+    // Gate::authorize('edit-job', $job);
 
     // Using can
     // if (Auth::user()->cannot('edit-job', $job)) {
@@ -68,6 +68,9 @@ class JobController extends Controller
       'salary' => ['required', 'string']
     ]);
     // authorize (on hold)
+    Gate::authorize('edit-job',
+      $job
+    );
     // update the job
     // $job->title = request('title');
     // $job->salary = request('salary');
@@ -85,6 +88,9 @@ class JobController extends Controller
   public function destroy(Job $job)
   {
     // authorize (on hold)
+    Gate::authorize('edit-job',
+      $job
+    );
     // delete the job
     $job->delete();
     //redirect

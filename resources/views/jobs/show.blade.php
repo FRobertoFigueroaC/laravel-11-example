@@ -6,6 +6,7 @@
  <p>
   This job pays {{$job->salary}} per year
  </p>
+ {{-- @can('edit', $job) if we use the policy instead the gate --}}
   @can('edit-job', $job)
     <div class="mt-6">
       <x-button href="{{'/jobs/'.$job->id.'/edit'}}">Edit</x-button>

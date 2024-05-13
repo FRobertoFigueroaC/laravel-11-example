@@ -15,20 +15,39 @@ class AuthController extends Controller
 
     public function login(Request $request){
     $attributes = $request->validate([
-        'email' => ['required', 'email'],
+        'email' => 'required | email',
         'password' => ['required', Password::min(6)]
       ]);
 
       // attempts to login
       if (!Auth::attempt($attributes)) {
-        $this->error('The credentials do not match', 401);
+       return  $this->error('The credentials do not match', 401);
       }
       $user = User::where('email', $request['email'])->first();
-      $token = $user->createToken($user->name.'-AuthToken')->plainTextToken;
+      $token = $user->createToken($user->first_name.'-AuthToken')->plainTextToken;
 
-      $response = $request->toArray();
       return $this->okWithData([
       'token' => $token
       ]);
+    }
+
+    public function create(Request $request){
+      // Validate
+      $attributes = $request->validate([
+        'first_name' => ['required', 'string', 'min:3'],
+        'last_name' => ['required', 'string', 'min:2'],
+        'email' => ['required', 'email'],
+        'password' => ['required', 'confirmed', Password::min(3)->max(20)->letters()->numbers()]
+      ]);
+
+      // Create user
+      $user = User::create($attributes);
+
+      $token = $user->createToken($user->first_name . '-AuthToken')->plainTextToken;
+
+      return $this->okWithData([
+        'token' => $token
+      ]);
+      
     }
 }
